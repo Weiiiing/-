@@ -1,18 +1,29 @@
-# 成语构词大模型的数字人文应用
+# 成语构词大模型数字人文应用
 - 训练成语构词大模型用于领域知识重组、回溯与发现，文章信息：
-- 张卫，王东波，刘浏. 基于大语言模型的成语隐喻式构词方法及其应用：知识重组、回溯与发现. **_情报学报_** (2025).
+- ● 张卫，王东波，刘浏. 基于大语言模型的成语隐喻式构词方法及其应用：知识重组、回溯与发现. **_情报学报_** (2025).
 
 ## 1. 成语构词大模型
-- 定义基于<短语结构，物象标签（源域），情感标签（目标域）>三元组的成语隐喻式构词知识体系，以成语出处文本为输入，成语构词结构为输出，立足句法特征探索Prompt模板设计与问答学习语料建设策略；引入荀子生成式大模型进行短语抽取、隐喻识别多任务联合建模，重点验证依存句法知识注入下构词大模型指令微调的增强效果；结合结构与内容层面的评价指标对大模型生成的构词结构进行多元评估。
+- 以成语出处文本为输入，成语构词结构为输出，定义基于<短语结构，物象标签（源域），情感标签（目标域）>三元组的成语隐喻式构词知识体系，立足句法特征设计Prompt模板与问答学习语料；引入荀子生成式大模型进行短语抽取、隐喻识别多任务联合建模，验证依存句法知识注入下构词大模型指令微调的增强效果。
+- ![1](https://github.com/user-attachments/assets/5f5e506c-767c-41e6-9257-2c46e8f7383a)
 
-## 2. File
-- "Hownet" is the China HowNet emotional dictionary.
-- "NTUSD" is the National Taiwan University sentiment lexicon.
-- "Li Jun lexicon" is the Li Jun sentiment lexicon of Tsinghua University.
-- "DUTIR" is the ontology database of emotion vocabulary of the Dalian University of Technology.
-- "FCCPSL" is the constructed poetry sentiment lexicon.
-- "Appreciation Dictionary of Tang Poetry" is the experimental corpus.
+## 2. 实验结果
+- 注入依存句法知识的XunziDP模型的准确率可达86.11%、87.82%、85.39%，依存句法prompt可激发荀子大模型对成语词汇结构生成与隐喻识别的多任务语义挖掘能力。
+- ![2](https://github.com/user-attachments/assets/526d3f09-7a5b-484e-815c-4591df697164)
+- 选取出现500次以上的依存关系如下：动宾关系（VOB，4307）、并列关系（COO，3741）、定中关系（ATT，3555）、主谓关系（SBV，2647）、状中结构（ADV，2326）、右附加关系（RAD，721）、核心关系（HED，682），重建prompt增强语料和训练XunziDP模型进行对照组实验：
+- ![3](https://github.com/user-attachments/assets/23cbe071-8e23-4e4d-9b40-504123104336)
+- 主谓关系与并列关系的注入提升效果最为显著，符合成语文化对主谓与并列结构的使用习惯（如“夸父（主）追（谓）日”“五湖（并列）四海”）。
 
-## 3. Methods and results
-### 3.1 Sentiment term extraction
-A list of multi-source sentiment words is collected from the general sentiment vocabularies and related domains to form the knowledge base. Next, the sentiment words are used to match the terms in the domain text, and the annotated text is then mapped to a character labeling sequence. Next, the BERT model is used to realize Chinese character embedding, after which the emotion radical (ER) features of Chinese characters are incorporated to extend the BERT vector to boost semantic information. The enhanced vector is input into a neural network to predict the labels of sequences to extract sentiment terms. The extracted terms include domain terms in the original vocabularies and unregistered terms predicted by the model. The results are as follows:
+## 3. 面向《全唐诗》的成语构词大模型数字人文应用
+- 利用《全唐诗》内42944首诗歌展开构词大模型的数字人文应用。以“，”符号为分割单位获取单位分句，利用最优的构词大模型对诗歌分句进行预测，得到464721个具有成语隐喻特征的短语。
+### 3.1 知识重组
+- 将构词大模型在《全唐诗》语料上生成的短语与成语语料库进行术语匹配得到5778个成语，建立成语与诗人、诗句概念之间的重组联系。
+- ![4](https://github.com/user-attachments/assets/fdd96741-eab8-4531-a20d-98f4e3e0645c)
+### 3.2 知识回溯
+- 对《全唐诗》中抽取、匹配得到的5778个成语进行出处分析，基于时序逻辑判断提及成语的诗歌创作年代是否早于成语目前记载的出处时间，最终确认了130个成语出处信息的知识回溯。
+- ![5](https://github.com/user-attachments/assets/9d8fc1d4-0c0f-46c1-934c-c613f8cc5751)
+### 3.3 知识发现
+- 在识别的短语集中去除现有成语后，形成一个包含411944条新短语的意象主题词表，这些新词不仅具备明确的古籍出处，亦可通过物象（源域）与情感（目标域）类目标签来组织、传播古典作品内的知识内涵与文化特性。
+- ![6](https://github.com/user-attachments/assets/936d3a98-21fc-4df9-b5a7-6bafe5f503a7)
+
+## 4. 声明
+- 这项工作是南京农业大学人文与社会计算研究中心的原创研究。
